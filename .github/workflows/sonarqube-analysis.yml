@@ -35,11 +35,11 @@ jobs:
           sonar-scanner \
             -Dsonar.projectKey=terraform_main \
             -Dsonar.host.url=http://localhost:9001 \
-            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN_1 }};
+            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN_MAIN }};
         elif [[ ${{ matrix.instance }} == '2' ]]; then
           sonar-scanner \
             -Dsonar.projectKey=terrafrom-feature1 \
             -Dsonar.host.url=http://localhost:9002 \
-            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN_2 }};
+            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN_FEATURE1 }};
         fi
 
