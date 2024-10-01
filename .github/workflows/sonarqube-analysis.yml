@@ -46,16 +46,16 @@ jobs:
     
     - name: SonarQube Analysis for Instance ${{ matrix.instance }}
         run: |
-          if [[ ${{ matrix.instance }} == '1' ]]; then
+          if [[ "${{ matrix.instance }}" == "1" ]]; then
             ./sonar-scanner/bin/sonar-scanner \
               -Dsonar.projectKey=terraform_main \
               -Dsonar.host.url=http://localhost:9001 \
               -Dsonar.login=${{ secrets.SONARQUBE_TOKEN_MAIN }} \
               -Dsonar.sources=. \
               -Dsonar.language=java;
-          elif [[ ${{ matrix.instance }} == '2' ]]; then
+          elif [[ "${{ matrix.instance }}" == "2" ]]; then
             ./sonar-scanner/bin/sonar-scanner \
-              -Dsonar.projectKey=terraform_feature1 \
+              -Dsonar.projectKey=terrafrom_feature1 \
               -Dsonar.host.url=http://localhost:9002 \
               -Dsonar.login=${{ secrets.SONARQUBE_TOKEN_FEATURE1 }} \
               -Dsonar.sources=. \
