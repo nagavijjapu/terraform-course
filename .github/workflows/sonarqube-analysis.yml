@@ -34,7 +34,10 @@ jobs:
       run: |
         curl -L -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
         unzip sonar-scanner.zip
-        export PATH="$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin"
+        export SONAR_SCANNER_HOME=$(pwd)/sonar-scanner-4.8.0.2856-linux
+        export PATH="$SONAR_SCANNER_HOME/bin:$PATH"
+        echo "SonarQube Scanner installed at $SONAR_SCANNER_HOME"
+        sonar-scanner --version  # Check if scanner was installed correctly
     
     - name: SonarQube Analysis for Instance ${{ matrix.instance }}
       run: |
