@@ -36,6 +36,11 @@ jobs:
         export SONAR_SCANNER_HOME=$(pwd)/sonar-scanner-4.8.0.2856-linux
         export PATH="$SONAR_SCANNER_HOME/bin:$PATH"
         sonar-scanner --version  # Verifying installation
+
+    - name: Check if SonarQube Token is set
+      run: echo "SonarQube token is set"
+      env:
+        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN_MAIN }}
     
     - name: SonarQube Analysis for Instance ${{ matrix.instance }}
       run: |
