@@ -34,12 +34,10 @@ jobs:
         curl -L -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
         unzip sonar-scanner.zip
         mv sonar-scanner-4.8.0.2856-linux sonar-scanner
-        echo "Adding Sonar Scanner to PATH"
-        export PATH="$(pwd)/sonar-scanner/bin:$PATH"
-        echo "PATH is: $PATH"
+   
         # export SONAR_SCANNER_HOME=$(pwd)/sonar-scanner-4.8.0.2856-linux
         # export PATH="$SONAR_SCANNER_HOME/bin:$PATH"
-        sonar-scanner --version  # Verifying installation
+        # sonar-scanner --version  # Verifying installation
 
     - name: Check if SonarQube Token is set
       run: echo "SonarQube token is set"
@@ -47,19 +45,19 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN_MAIN }}
     
     - name: SonarQube Analysis for Instance ${{ matrix.instance }}
-      run: |
-        if [[ ${{ matrix.instance }} == '1' ]]; then
-          sonar-scanner \
-            -Dsonar.projectKey=terraform_main \
-            -Dsonar.host.url=http://localhost:9001 \
-            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN_MAIN }} \
-            -Dsonar.sources=. \
-            -Dsonar.language=java;
-        elif [[ ${{ matrix.instance }} == '2' ]]; then
-          sonar-scanner \
-            -Dsonar.projectKey=terrafrom_feature1 \
-            -Dsonar.host.url=http://localhost:9002 \
-            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN_FEATURE1 }} \
-            -Dsonar.sources=. \
-            -Dsonar.language=java;
-        fi
+        run: |
+          if [[ ${{ matrix.instance }} == '1' ]]; then
+            ./sonar-scanner/bin/sonar-scanner \
+              -Dsonar.projectKey=terraform_main \
+              -Dsonar.host.url=http://localhost:9001 \
+              -Dsonar.login=${{ secrets.SONARQUBE_TOKEN_MAIN }} \
+              -Dsonar.sources=. \
+              -Dsonar.language=java;
+          elif [[ ${{ matrix.instance }} == '2' ]]; then
+            ./sonar-scanner/bin/sonar-scanner \
+              -Dsonar.projectKey=terraform_feature1 \
+              -Dsonar.host.url=http://localhost:9002 \
+              -Dsonar.login=${{ secrets.SONARQUBE_TOKEN_FEATURE1 }} \
+              -Dsonar.sources=. \
+              -Dsonar.language=java;
+          fi
